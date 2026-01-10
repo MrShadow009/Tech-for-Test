@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "TODO.md",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "AITS-tirupati-logo.png",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/AITS-tirupati-logo.png",
+      "dest": "/AITS-tirupati-logo.png"
+    },
+    {
+      "src": "/TODO.md",
+      "dest": "/TODO.md"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

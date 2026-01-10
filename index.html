@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tech for Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --accent-strong: #4ade80;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --danger: #ef4444;
+      --card-radius: 18px;
+      --shadow-soft: 0 22px 45px rgba(15, 23, 42, 0.9);
+      --shadow-glow: 0 0 60px rgba(34, 197, 94, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 980px;
+      background: radial-gradient(circle at top left, #1f2937 0, #020617 60%);
+      border-radius: 26px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: var(--shadow-soft), var(--shadow-glow);
+      padding: 32px 26px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18) 0, transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(34, 197, 94, 0.18) 0, transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .page-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* College Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Center content horizontally */
+      background: #fff;
+      padding: 10px 20px 10px 20px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft), var(--shadow-glow);
+      margin: 0 auto 0;
+      gap: 24px; /* Add some space between text and logo */
+      max-width: 980px;
+      width: 100%;
+    }
+    .header h1 {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      line-height: 0.5;
+      color: #222;
+      letter-spacing: 1px;
+      text-align: center; /* Center text inside h1 */
+    }
+    .header h1 span {
+      display: block;
+    }
+    .header h1 span:first-child {
+      font-size: 0.3rem; /* reduced to 75% */
+      color: #1a237e;
+      letter-spacing: 2px;
+      font-family: 'Cinzel', serif;
+    }
+    .header h1 span:nth-child(2) {
+      font-size: 0.6rem; /* reduced to 75% */
+      color: #333;
+      margin-top: 5px;
+      font-family: 'Nunito', sans-serif;
+    }
+    .header h1 span:nth-child(3) {
+      font-size: 0.10rem; /* reduced to 75% */
+      color: #d32f2f;
+      font-weight: bold;
+      margin-top: 5px;
+      letter-spacing: 1px;
+    }
+    .header h1 span:nth-child(4) {
+      font-size: 0.4rem; /* reduced to 75% */
+      color: #444;
+      margin-top: 5px;
+      font-family: 'Nunito', sans-serif;
+    }
+    .header img {
+      height: 50px; /* reduced from 70px */
+      width: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(26,35,126,0.08);
+      background: none;
+      margin-left: 20px;
+      border: 2px solid #e0e0e0;
+      padding: 3px;
+    }
+
+    /* Top Header */
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .event-tag {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: var(--accent-strong);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .event-tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #22c55e 0, #22c55e 55%, transparent 60%);
+      box-shadow: 0 0 16px rgba(34, 197, 94, 0.9);
+    }
+
+    .title-block h1 {
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: 0.12em;
+      color: #f9fafb;
+      margin-top: 6px;
+    }
+
+    .title-block h1 span {
+      color: var(--accent-strong);
+    }
+
+    .title-sub {
+      margin-top: 6px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .event-year-pill {
+      min-width: 120px;
+      align-self: flex-start;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(145deg, #22c55e, #4ade80);
+      color: #022c22;
+      font-weight: 700;
+      text-align: center;
+      font-size: 13px;
+      box-shadow: 0 18px 35px rgba(34, 197, 94, 0.55);
+    }
+
+    .event-year-pill span {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.8;
+    }
+
+    .event-year-pill strong {
+      font-size: 18px;
+      letter-spacing: 0.2em;
+    }
+
+    /* Institution row */
+    .institution-row {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.75));
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .institution-main {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .institution-main strong {
+      color: #e5e7eb;
+    }
+
+    .institution-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag-pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #e5e7eb;
+    }
+
+    /* Metrics row */
+    .metrics-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric-card {
+      flex: 1 1 120px;
+      min-width: 120px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617);
+      border: 1px solid rgba(55, 65, 81, 0.85);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 120% -10%, rgba(34, 197, 94, 0.22), transparent 45%);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .metric-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .metric-number {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      color: #e5e7eb;
+      margin-bottom: 2px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    /* Grid layout */
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr 0.8fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      border-radius: var(--card-radius);
+      background: radial-gradient(circle at top, #020617, #020617);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 14px 14px 13px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card.glow::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.18), transparent 55%);
+      opacity: 0.75;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #e5e7eb;
+    }
+
+    .card-pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .card-body strong {
+      color: #e5e7eb;
+    }
+
+    /* Technology domains */
+    .pill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .pill-section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #d1d5db;
+      margin-bottom: 2px;
+    }
+
+    .pill-domain {
+      padding: 8px 9px;
+      border-radius: 12px;
+      border: 1px dashed rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .pill-domain h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 3px;
+    }
+
+    .pill-domain p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Team rules */
+    .rules-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .rule-item {
+      padding: 9px 9px;
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rule-item::after {
+      content: attr(data-badge);
+      position: absolute;
+      top: 8px;
+      right: 9px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(156, 163, 175, 0.9);
+    }
+
+    .rule-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .rule-text {
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+
+    .badge-female {
+      color: #f97316;
+    }
+
+    /* General rules */
+    .rules-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .rule-number {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(148, 163, 184, 0.9);
+      margin-bottom: 2px;
+    }
+
+    .rule-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 1px;
+    }
+
+    .rule-desc {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .warning-strip {
+      margin-top: 10px;
+      padding: 7px 9px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, rgba(248, 113, 113, 0.18), transparent);
+      border: 1px solid rgba(248, 113, 113, 0.6);
+      font-size: 11px;
+      color: #fecaca;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .warning-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #ef4444;
+      box-shadow: 0 0 10px rgba(248, 113, 113, 0.9);
+    }
+
+    /* PPT structure */
+    .ppt-grid {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .ppt-col-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e5e7eb;
+      margin-bottom: 4px;
+    }
+
+    .ppt-item {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      margin-bottom: 3px;
+    }
+
+    .ppt-num {
+      min-width: 14px;
+      font-size: 11px;
+      color: rgba(156, 163, 175, 0.9);
+    }
+
+    .ppt-body {
+      font-size: 12px;
+    }
+
+    .ppt-body strong {
+      color: #e5e7eb;
+    }
+
+    /* Evaluation & CTA */
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .eval-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .eval-item {
+      padding: 7px 9px;
+      border-radius: 11px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .eval-item h4 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 2px;
+    }
+
+    .eval-item p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .cta-card {
+      position: fixed;
+      left: calc(100vw - 220px);
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(34, 197, 94, 0.6);
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(22, 163, 74, 0.1));
+      box-shadow: 0 14px 30px rgba(34, 197, 94, 0.35);
+      z-index: 1000;
+      width: 200px;
+      cursor: move;
+      user-select: none;
+    }
+
+    .cta-card h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #bbf7d0;
+      margin-bottom: 3px;
+    }
+
+    .cta-card p {
+      font-size: 12px;
+      color: #dcfce7;
+      margin-bottom: 7px;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+      color: #022c22;
+      background: radial-gradient(circle at top left, #22c55e, #4ade80);
+      box-shadow: 0 14px 25px rgba(21, 128, 61, 0.6);
+      text-decoration: none;
+    }
+
+    .cta-button span.icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(6, 95, 70, 0.9);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      background: rgba(187, 247, 208, 0.9);
+      color: #064e3b;
+    }
+
+    .cta-footnote {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #a7f3d0;
+    }
+
+    /* Bottom organization strip */
+    .bottom-row {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(55, 65, 81, 0.9);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .org-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .org-title {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .org-name {
+      font-size: 12px;
+      color: #e5e7eb;
+    }
+
+    .org-dept {
+      font-size: 11px;
+    }
+
+    .org-right {
+      text-align: right;
+    }
+
+    .org-institute {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(209, 213, 219, 0.95);
+    }
+
+    .org-dept-main {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .copyright {
+      margin-top: 4px;
+      font-size: 10px;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    /* Student Coordinators */
+    .student-coordinators {
+      text-align: center;
+      padding: 20px;
+      background: #020617;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(55, 65, 81, 0.9);
+      margin-bottom: 20px;
+    }
+
+    .student-coordinators h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #e5e7eb;
+      margin-bottom: 10px;
+    }
+
+    .student-coordinators h4 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e5e7eb;
+      margin-bottom: 8px;
+    }
+
+    .coordinators-list {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .coordinators-group {
+      text-align: center;
+    }
+
+    .coordinators-group ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .coordinators-group li {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 8px;
+      }
+      .page {
+        padding: 22px 16px 18px;
+        border-radius: 20px;
+      }
+      .header {
+        flex-direction: row;
+        text-align: left;
+        gap: 10px;
+        justify-content: flex-start;
+      }
+      .header img {
+        width: 40px;
+        height: 40px;
+      }
+      .header h1 {
+        font-size: 16px;
+        line-height: 1.2;
+      }
+      .header h1 span:nth-child(2) {
+        font-size: 0.4rem;
+        margin-top: 3px;
+      }
+      .header h1 span:nth-child(3) {
+        font-size: 0.08rem;
+        margin-top: 3px;
+      }
+      .header h1 span:nth-child(4) {
+        font-size: 0.3rem;
+        margin-top: 3px;
+      }
+      .top-row {
+        flex-direction: column;
+      }
+      .institution-row {
+        flex-direction: column;
+        align-items: flex-start;
+        border-radius: 18px;
+      }
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+      .rules-list {
+        grid-template-columns: 1fr;
+      }
+      .bottom-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .org-right {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .title-block h1 {
+        font-size: 26px;
+      }
+      .metrics-row {
+        gap: 10px;
+      }
+      .metric-card {
+        min-width: calc(50% - 6px);
+      }
+    }
+  </style>
+</head>
+<body>
+    <div class="header d-flex justify-content-center align-items-center flex-column flex-md-row">
+        <img src="AITS-tirupati-logo.png" alt="College Logo">
+        <h1>
+            <span style="font-size: 50%;">Annamacharya Institute of Technology and Sciences::Tirupati</span><br>
+            <span style="color:red; font-size: 35%;">(Autonomous)</span><br>
+            <span style="font-size: 50%;">Approved by AICTE, New Delhi & Affiliation to JNTUA, Anantapuramu.</span>
+        </h1>
+    </div>
+
+  <div class="container">
+    <div class="page">
+      <div class="page-inner">
+      <!-- College Header -->
+    
+      <!-- Top header -->
+      <div class="top-row">
+        <div class="title-block">
+          <div class="event-tag">Tech Innovation Expo</div>
+          <h1>TECH FOR <span>TEST</span></h1>
+          <div class="title-sub">Cyber Security · IoT · Blockchain</div>
+        </div>
+        <div class="event-year-pill">
+          <span>Event</span>
+          <strong>2026</strong>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-content">
+            <div class="metric-number">3-6</div>
+            <div class="metric-label">Team Members</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-content">
+            <div class="metric-number">3</div>
+            <div class="metric-label">Technology Domains</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-content">
+            <div class="metric-number">7</div>
+            <div class="metric-label">PPT Slides</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-content">
+            <div class="metric-number">10</div>
+            <div class="metric-label">Min Presentation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Overview Card -->
+      <div class="card" style="margin-bottom: 18px;">
+        <div class="card-header">
+          <div class="card-title">Event Overview</div>
+          <div class="card-pill">About the Event</div>
+        </div>
+        <div class="card-body">
+          We are organizing a hackathon‑style technical innovation event focused on Cyber Security, IoT, and Blockchain technologies. This event encourages students to present innovative ideas, working prototypes, and real‑time problem‑solving approaches.
+        </div>
+      </div>
+
+      <!-- Event Guidelines and Registration Details Row -->
+      <div style="margin-bottom: 18px;">
+        <!-- Event Guidelines Card -->
+        <div class="card" style="margin-bottom: 18px;">
+          <div class="card-header">
+            <div class="card-title">Event Guidelines</div>
+            <div class="card-pill">Important Rules</div>
+          </div>
+          <div class="card-body">
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li>• Teams must report on time</li>
+              <li>• Carry college ID cards</li>
+              <li>• Bring laptops, chargers, and required components</li>
+              <li>• Judges’ decision will be final</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Registration Details Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Registration Details</div>
+            <div class="card-pill">Payment Info</div>
+          </div>
+          <div class="card-body">
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li>• Team Entry Fee: ₹50 only</li>
+              <li>• Entry fee is non‑refundable</li>
+              <li>• Registration is confirmed only after payment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="row g-3 mb-3">
+        <!-- Left column: Domains + Team rules -->
+        <div class="card glow col-lg-5">
+          <div class="card-header">
+            <div class="card-title">Technology Domains</div>
+            <div class="card-pill">Pick any one</div>
+          </div>
+          <div class="card-body">
+            <div class="pill-list">
+              <div class="pill-domain">
+                <h3>Cyber Security</h3>
+                <p>Network security, threat detection, ethical hacking, data protection.</p>
+              </div>
+              <div class="pill-domain">
+                <h3>Internet of Things</h3>
+                <p>Smart devices, IoT systems, real-world connected solutions.</p>
+              </div>
+              <div class="pill-domain">
+                <h3>Blockchain</h3>
+                <p>Decentralized applications, smart contracts, blockchain solutions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-lg-3">
+          <div class="card-header">
+            <div class="card-title">Team Rules</div>
+            <div class="card-pill">Participation format</div>
+          </div>
+          <div class="card-body">
+            <div class="rules-stack">
+              <div class="rule-item" data-badge="Size">
+                <div class="rule-label">Team Size</div>
+                <div class="rule-text">Cybersecurity and Blockchain teams must consist of exactly 3 members. IoT teams must consist of 3-6 members.</div>
+              </div>
+              <div class="rule-item" data-badge="Diversity">
+                <div class="rule-label badge-female">Gender Diversity <span style="color: #fff;">(optional)</span></div>
+                <div class="rule-text">At least one female member must be part of the team.</div>
+              </div>
+              <div class="rule-item" data-badge="Mandatory">
+                <div class="rule-label">No Individual <br> Participation</div>
+                <div class="rule-text">Solo entries are not permitted. Team collaboration is mandatory.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column: Evaluation + CTA -->
+        <div class="right-column col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Evaluation Criteria</div>
+              <div class="card-pill">Judging parameters</div>
+            </div>
+            <div class="card-body">
+              <div class="eval-list">
+                <div class="eval-item">
+                  <h4>Innovation & Creativity</h4>
+                  <p>Uniqueness and originality of the solution.</p>
+                </div>
+                <div class="eval-item">
+                  <h4>Technical Implementation</h4>
+                  <p>Quality of code, architecture, and working prototype.</p>
+                </div>
+                <div class="eval-item">
+                  <h4>Problem Solving</h4>
+                  <p>Effectiveness of the solution to the defined problem.</p>
+                </div>
+                <div class="eval-item">
+                  <h4>Presentation Quality</h4>
+                  <p>Clarity, structure, and delivery of the presentation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-card">
+            <h3>Ready to Compete?</h3>
+            <p>Join an exciting journey of innovation, collaboration, and technical excellence. Showcase your skills and make your mark.</p>
+            <a
+              class="cta-button"
+              href="https://docs.google.com/forms/d/e/1FAIpQLScnGP9ZsnWdPQUdNTaEnJwEt7ees1oI51p2uH0wnt2u55fRGg/viewform?usp=header"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="icon">↗</span>
+              Register Now
+            </a>
+            <div class="cta-footnote">Limited slots. First come, first served.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second row: General rules & PPT structure -->
+      <div class="row g-3 mb-3">
+        <div class="card col-lg-6">
+          <div class="card-header">
+            <div class="card-title">General Rules & Guidelines</div>
+            <div class="card-pill">Must follow</div>
+          </div>
+          <div class="card-body">
+            <div class="rules-list">
+              <div>
+                <div class="rule-number">1</div>
+                <div class="rule-title">English Explanation</div>
+                <div class="rule-desc">All presentations and explanations must be in English.</div>
+              </div>
+              <div>
+                <div class="rule-number">2</div>
+                <div class="rule-title">Original Work</div>
+                <div class="rule-desc">All projects must be original and plagiarism-free.</div>
+              </div>
+              <div>
+                <div class="rule-number">3</div>
+                <div class="rule-title">Prototype Mandatory</div>
+                <div class="rule-desc">A working prototype or live demo is required.</div>
+              </div>
+              <div>
+                <div class="rule-number">4</div>
+                <div class="rule-title">7-Slide Presentation</div>
+                <div class="rule-desc">PPT must contain exactly 7 slides as per structure.</div>
+              </div>
+              <div>
+                <div class="rule-number">5</div>
+                <div class="rule-title">Own Network</div>
+                <div class="rule-desc">Teams must arrange their own internet/network needs.</div>
+              </div>
+              <div>
+                <div class="rule-number">6</div>
+                <div class="rule-title">10-Minute Limit</div>
+                <div class="rule-desc">Maximum presentation time is 10 minutes per team.</div>
+              </div>
+            </div>
+
+            <div class="warning-strip">
+              <div class="warning-dot"></div>
+              <span>Teams violating any rules will be immediately disqualified.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-lg-6">
+          <div class="card-header">
+            <div class="card-title">PPT Structure · 7 Slides</div>
+            <div class="card-pill">Presentation flow</div>
+          </div>
+          <div class="card-body">
+            <div class="ppt-grid">
+              <div>
+                <div class="ppt-col-title">Slide Overview</div>
+                <div class="ppt-item">
+                  <div class="ppt-num">1</div>
+                  <div class="ppt-body"><strong>Title Slide</strong><br />Project name, team details, and domain.</div>
+                </div>
+                <div class="ppt-item">
+                  <div class="ppt-num">2</div>
+                  <div class="ppt-body"><strong>Problem Statement</strong><br />Clear definition of the problem.</div>
+                </div>
+                <div class="ppt-item">
+                  <div class="ppt-num">3</div>
+                  <div class="ppt-body"><strong>Proposed Solution</strong><br />Your innovative approach.</div>
+                </div>
+                <div class="ppt-item">
+                  <div class="ppt-num">4</div>
+                  <div class="ppt-body"><strong>Technology Stack</strong><br />Tools, platforms, and frameworks used.</div>
+                </div>
+              </div>
+              <div>
+                <div class="ppt-col-title">Continuation</div>
+                <div class="ppt-item">
+                  <div class="ppt-num">5</div>
+                  <div class="ppt-body"><strong>Architecture & Design</strong><br />System architecture diagrams.</div>
+                </div>
+                <div class="ppt-item">
+                  <div class="ppt-num">6</div>
+                  <div class="ppt-body"><strong>Prototype Demo</strong><br />Working demonstration.</div>
+                </div>
+                <div class="ppt-item">
+                  <div class="ppt-num">7</div>
+                  <div class="ppt-body"><strong>Conclusion & Future</strong><br />Summary and future enhancements.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom organisation row -->
+      <div class="bottom-row">
+        <div class="org-left">
+          <div class="org-title">Event Organization</div>
+          <div class="org-name">Mr. DUGGI NAGABUSHANAM ,M.Tech ,Ph.D.</div>
+          <div class="org-dept">Head of Department - CIC</div>
+          <div class="org-dept">Organized by: CIC Department</div>
+          <div class="org-dept">Created by: <Span style="color: #fff;">Janaka Tejeswar Valluru</span> and <Span style="color: #fff;">Pradeep Kumar Pulipati </span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="student-coordinators">
+    <h3>Student Coordinators</h3>
+    <div class="coordinators-list">
+      <div class="coordinators-group">
+        
+        <ul>
+          <li>Janaka Tejeswar .V</li>
+          <li>Bharadwaj .K</li>
+        </ul>
+      </div>
+      <div class="coordinators-group">
+      
+        <ul>
+          <li>Manasa .C</li>
+          <li>Ushasree .P</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 20px; background: #020617; color: var(--muted); border-top: 1px solid rgba(55, 65, 81, 0.9); margin-top: 20px;">
+    <div class="org-institute">Annamacharya Institute of Technology and Sciences :: Tirupati</div>
+    <div class="org-dept-main">CIC Department</div>
+    <div class="copyright">© 2026 TECH FOR TEST EVENT. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const ctaCard = document.querySelector('.cta-card');
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    ctaCard.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      offsetX = e.clientX - ctaCard.offsetLeft;
+      offsetY = e.clientY - ctaCard.offsetTop;
+      ctaCard.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const newLeft = e.clientX - offsetX;
+        const newTop = e.clientY - offsetY;
+        ctaCard.style.left = `${newLeft}px`;
+        ctaCard.style.top = `${newTop}px`;
+        ctaCard.style.transform = 'none'; // Remove transform to allow free movement
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        ctaCard.style.cursor = 'move';
+      }
+    });
+  </script>
+</body>
+</html>
